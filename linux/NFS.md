@@ -36,7 +36,7 @@ A Network File System (NFS) allows remote hosts to mount file systems over a net
 
 To setup an NFS Server, you need to edit one configuration file. 
 
->	/etc/exports.
+	/etc/exports
 
 This configuration file contains the directories you want to make available to the clients and the IP Address or DNS address of the clients. In very large installations with lots of clients, you can use a network and a netmask. Finally you can also provide wild-cards in extreme cases. All these will be covered below.
 

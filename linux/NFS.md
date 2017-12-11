@@ -1,6 +1,6 @@
-#Part 1: Setting up and starting an NFS Server
+# Part 1: Setting up and starting an NFS Server
 
-##What is NFS
+## What is NFS
 
 A Network File System (NFS) allows remote hosts to mount file systems over a network and interact with those file systems as though they are mounted locally. In other words It is a client/server system that allows users to access files across a network and treat them as if they resided in a local file directory. This guide will instruct you on how to install, setup and run NFS Server on CentOS 7.
 
@@ -8,13 +8,13 @@ A Network File System (NFS) allows remote hosts to mount file systems over a net
 
 >The steps in this guide require root privileges. Be sure to run the steps below as **root** or with the `sudo` prefix.
 
-##Prerequisites
+## Prerequisites
 
-####Step 1: Install nfs-utils
+#### Step 1: Install nfs-utils
 
 	yum install nfs-utils	
 
-####Step 2: Enable and start services
+#### Step 2: Enable and start services
 
 	systemctl enable rpcbind
 	systemctl enable nfs-server
@@ -25,14 +25,14 @@ A Network File System (NFS) allows remote hosts to mount file systems over a net
 	systemctl start nfs-lock
 	systemctl start nfs-idmap
 
-####Step 3: Firewall settings
+#### Step 3: Firewall settings
 
 	firewall-cmd --permanent --zone=public --add-service=nfs
 	firewall-cmd --permanent --zone=public --add-service=mountd
 	firewall-cmd --permanent --zone=public --add-service=rpc-bind
 	firewall-cmd --reload
 
-##Setting up NFS Server
+## Setting up NFS Server
 
 To setup an NFS Server, you need to edit one configuration file. 
 
@@ -47,14 +47,14 @@ It is worthy to note that there are two other files that you can edit to give yo
 
 These two files specify which clients on the network can use services on your the server. Each line of the file contains a single entry listing a service and a set of clients. These files are discussed in details in the second part of this guide. **Securing your NFS Server**
 
-###The Exports File (`/etc/exports`)
+### The Exports File (`/etc/exports`)
 This file contains a list of entries; each entry indicates a volume that is shared and how it is shared. The description here is minim although the description will suffice for most NFS Setups.
 
 An entry in `/etc/exports` will typically look like this:
 
 	path client1(optionC11,optionC12) client2(optionC21,optionC22)
 
-#####Where
+##### Where
 
 `path`
 
@@ -80,9 +80,9 @@ There are other options, please refer to the manual page for exportfs for more o
 
 	man exportfs
 	
-##Examples
+## Examples
 
-####Step 1: Edit /etc/exports.
+#### Step 1: Edit /etc/exports.
 
 Let's assume you have two clients with IP addresses 192.168.1.7 and 192.168.1.8 and you want to share your home directory (with all sub-paths in home directory) with first client and only the home directory of a user called john with the second client, your `/etc/exports` file will look like this.
 
@@ -109,11 +109,11 @@ Finally, you can use a wild card `*` instead of IP Addresses. For example
 	/usr/local/lib/src		*(rw,no_root_squash,no_subtree_check)
 
 
-####Step 2: Restart NFS Server
+#### Step 2: Restart NFS Server
 
 	systemctl restart nfs-server
 	
-####Step 3: Connect to the NFS Server from client.
+#### Step 3: Connect to the NFS Server from client.
 
 ##### Create the mount point
 
@@ -123,7 +123,7 @@ Finally, you can use a wild card `*` instead of IP Addresses. For example
 
 	mount -t nfs 192.168.1.100:/home /mnt/nfs/home/
 
-######Where 
+###### Where 
 	192.168.1.100 is the server IP Address
 	/home is the path being shared on the server.
 	
